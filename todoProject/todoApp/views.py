@@ -4,10 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from django.http import HttpResponse
-from rest_framework.decorators import api_view
 import json
-
-# Create your views here.
 
 class TodoTaskView(APIView):
     parser_classes = (MultiPartParser, FormParser)
@@ -23,12 +20,6 @@ class TodoTaskView(APIView):
                 task=ToDoTask.objects.filter(pk=pk)
                 serializer = ToDoSerializer(task, many=True)
                 return Response(serializer.data)
-        else:
-            response_data={
-                    "state":"ERROR",
-                    "description":"Wrong request method"
-                }
-            return HttpResponse(json.dumps(response_data), content_type='application/json', status=400)
         
     def post(self, request): # Post task
         serializer = ToDoSerializer(data=request.data)
@@ -52,11 +43,37 @@ class TodoTaskView(APIView):
                     "state":"SUCCESS",
                     "description":"Data updated successfully"
                 }
-            HttpResponse(json.dumps(response_data), content_type='application/json', status=200)
-        response_data={
+            return HttpResponse(json.dumps(response_data), content_type='application/json', status=200)
+    
+
+    def delete(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        if pk==None:
+            response_data={
                     "state":"ERROR",
-                    "description":"Data update failed",
+                    "description":"NO"
                 }
-        return HttpResponse(json.dumps(response_data), content_type='application/json')
+            return HttpResponse(json.dumps(response_data), content_type='application/json', status=400)
+        try:
+            existingTask = ToDoTask.objects.get(pk=pk)
+        except:
+            response_data={
+                    "state":"ERROR",
+                    "description":"Entry does not exist"
+                }
+            return HttpResponse(json.dumps(response_data), content_type='application/json', status=400)
+        if  request.method == 'DELETE':
+            existingTask.delete()
+            response_data={
+                    "state":"SUCCESS",
+                    "description":"Task deleted successfuly"
+                }
+            return HttpResponse(json.dumps(response_data), content_type='application/json')
+        else:
+            response_data={
+                    "state":"ERROR",
+                    "description":"Unavailable method used"
+                }
+            return HttpResponse(json.dumps(response_data), content_type='application/json')
 
     
