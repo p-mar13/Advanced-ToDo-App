@@ -1,0 +1,26 @@
+[
+    {
+        "model": "todoApp.Category",
+        "pk": 1,
+        "fields": {
+            "name": "Other",
+            "description": "Tasks that do not fit the other categories."
+        }
+    },
+    {
+        "model": "todoApp.Category",
+        "pk": 2,
+        "fields": {
+                "name": "Work",
+                "description": "Tasks focused on performing work-related things."
+        }
+    },
+    {
+        "model": "todoApp.Category",
+        "pk": 3,
+        "fields": {
+            "name": "Health",
+            "description": "Any health-related tasks."
+        }
+    }
+]

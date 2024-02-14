@@ -1,0 +1,26 @@
+[
+    {
+        "model": "todoApp.TaskStatus",
+        "pk": 1,
+        "fields": {
+            "current_status": "New",
+            "closed": "False"
+        }
+    },
+    {
+        "model": "todoApp.TaskStatus",
+        "pk": 2,
+        "fields": {
+            "current_status": "In progress",
+            "closed": "False"
+        }
+    },
+    {
+        "model": "todoApp.TaskStatus",
+        "pk": 3,
+        "fields": {
+            "current_status": "Closed",
+            "closed": "True"
+        }
+    }
+]
